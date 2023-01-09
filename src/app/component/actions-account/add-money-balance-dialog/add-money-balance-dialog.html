@@ -1,0 +1,12 @@
+<h3 mat-dialog-title>Recharger mon compte</h3>
+<div mat-dialog-content >
+  <mat-form-field appearance="outline">
+    <mat-label>Montant</mat-label>
+    <input matInput placeholder="Montant" [(ngModel)]="amountTocharge">
+    <span matSuffix>$</span>
+  </mat-form-field>
+  <div #paypal></div>
+</div>
+<div mat-dialog-actions class="justify-content: center">
+  <button mat-button [mat-dialog-close]="" cdkFocusInitial>OK</button>
+</div>

@@ -1,0 +1,122 @@
+<style>
+  .mat-badge-content  {
+    background: silver !important;
+    color: black !important;
+  }
+
+</style>
+<div>
+  <div class="row">
+    <div class="col-md-8">
+      <mat-card>
+        <mat-card-content>
+          <div>
+            <h5>Type de recherche : </h5>
+            <button type="button" (click)="changeTypeSearch('dateSearch')" [className]="typeSearch==='dateSearch'?'btn btn-outline-primary mr-5':'btn btn-outline-secondary mr-5'" class="btn btn-outline-primary mr-5"> Par date</button>
+            <button type="button" (click)="changeTypeSearch('rangeSearch')" [className]="typeSearch==='dateSearch'?'btn btn-outline-secondary':'btn btn-outline-primary'" class="btn btn-outline-secondary">Par intervalle</button>
+          </div>
+          <div class="mt-3">
+            <app-search-stock class="mr-4" (stockChoosenEvent)="saveChoosenStock($event)" ></app-search-stock>
+            <span>
+              <span *ngIf="typeSearch === 'dateSearch'">
+                <mat-form-field [style.width.px]=170 [style.font-size.px]="12" appearance="outline">
+                  <input #dateInput matInput disabled (dateChange)="updateOneDate($event)" [matDatepicker]="picker" placeholder="Choisir une date">
+                  <mat-datepicker-toggle matSuffix [disabled]="!canSelectDate" [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker [disabled]="!canSelectDate"></mat-datepicker>
+                </mat-form-field>
+              </span>
+              <span *ngIf="typeSearch === 'rangeSearch'">
+                  <mat-form-field  class="mr-3" [style.width.px]=170 [style.font-size.px]="12" appearance="outline">
+                    <input #dateStartInput matInput disabled (dateChange)="updateDateStart($event)" [matDatepicker]="pickerStart" placeholder="Date debut">
+                    <mat-datepicker-toggle matSuffix [disabled]="!canSelectDate" [for]="pickerStart"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerStart [disabled]="!canSelectDate" ></mat-datepicker>
+                 </mat-form-field>
+                <mat-form-field [style.width.px]=170 [style.font-size.px]="12" appearance="outline">
+                  <input #dateEndInput matInput disabled (dateChange)="updateDateEnd($event)" [min]="dateMinRange" [matDatepicker]="$any(pickerEnd)" placeholder="Date fin">
+                  <mat-datepicker-toggle matSuffix [disabled]="!canSelectDate" [for]="pickerEnd"></mat-datepicker-toggle>
+                  <mat-datepicker #pickerEnd [disabled]="!canSelectDate" ></mat-datepicker>
+                </mat-form-field>
+              </span>
+              <span class="ml-3">
+                <button [disabled]="!isValid" (click)="searchStock()" class = "mat-elevation-z1" mat-icon-button color="primary" >
+                <mat-icon>search</mat-icon>
+                </button>
+              </span>
+
+            </span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      <mat-card class="mt-5" *ngIf="showPrices" >
+        <mat-card-title>
+          <div class="text-center pt-2">
+            <span><b>Evolution du prix :</b>{{choosenStock?choosenStock.name:''}}</span>
+          </div>
+        </mat-card-title>
+        <mat-card-content>
+          <div #stockLineChart id="stockLineChart" style="height: 350px;"></div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-md-4">
+      <div>
+        <mat-card class="mr-4" style="height: 365px"  >
+          <mat-card-title>
+            <div class="text-center pt-2">
+              <span>
+                <b class="mr-3">Les plus populaires</b>
+                <button class = "mat-elevation-z1 mr-2" (click)="filterHistory('day')" mat-icon-button  style="font-size: smaller;height: 30px;width: 30px;padding: inherit;color: black;" [style.border]="activeSearch=='day'? '1px solid cornflowerblue':'1px solid #c4c9d3'" >
+                  J
+                </button>
+                <button class = "mat-elevation-z1 mr-2" (click)="filterHistory('week')" mat-icon-button  style="font-size: smaller;height: 30px;width: 30px;padding: inherit;color: black;" [style.border]="activeSearch=='week'? '1px solid cornflowerblue':'1px solid #c4c9d3'" >
+                  S
+                </button>
+                <button class = "mat-elevation-z1 mr-2" (click)="filterHistory('month')" mat-icon-button  style="font-size: smaller;height: 30px;width: 30px;padding: inherit;color: black;" [style.border]="activeSearch=='month'? '1px solid cornflowerblue':'1px solid #c4c9d3'">
+                  M
+                </button>
+              </span>
+            </div>
+          </mat-card-title>
+          <mat-card-content>
+            <div class="row mt-3" *ngFor="let el of historyFiltered">
+              <div class="col-10">
+                <div><b>{{el.name}}</b></div>
+                <div class="text-black-50">{{el.symbol}}</div>
+              </div>
+              <div class="col-1">
+                <mat-icon matBadge="{{el.count}}"  class="test" matBadgeSize="small" >star_border</mat-icon>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <div class="mt-5" *ngIf="showPrices">
+        <mat-card class="mr-4" style="height: 170px"  >
+          <mat-card-title>
+            <div class="text-center pt-2">
+              <span><b>Statistiques du marché</b></span>
+            </div>
+          </mat-card-title>
+          <mat-card-content class="ml-3">
+            <div class="mb-2 mt-3">
+              <b>Plus haut :</b>
+              <span> {{highestValue.toFixed(2)}} $</span>
+            </div>
+            <div class="mb-2">
+              <b>Plus bas :</b>
+              <span> {{lowestValue.toFixed(2)}} $</span>
+            </div>
+            <div class="mb-2">
+              <b>Volume  :</b>
+              <span> {{volume}} $</span>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+    </div>
+  </div>
+
+
+</div>
+

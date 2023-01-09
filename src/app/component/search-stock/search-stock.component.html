@@ -1,0 +1,8 @@
+<mat-form-field class="example-full-width" appearance="outline" [style.width.px]=400>
+  <input type="text" width="550" (keyup)="hideSpinner($event)" placeholder="Choisir une action" aria-label="Action" matInput [formControl]="myControl"  [matAutocomplete]="auto">
+</mat-form-field>
+<mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="onSelectionChanged($event)">
+  <mat-option *ngFor="let option of filteredOptions | async" [value]="option"   >
+    {{ '('+option.symbol+') '+ option.name }}
+  </mat-option>
+</mat-autocomplete>

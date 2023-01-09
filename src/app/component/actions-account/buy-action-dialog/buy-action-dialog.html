@@ -1,0 +1,42 @@
+<h3 mat-dialog-title *ngIf="givenData.isAddMethod">Acheter une action</h3>
+<h3 mat-dialog-title *ngIf="!givenData.isAddMethod">Vendre une action</h3>
+<div mat-dialog-content >
+  <div *ngIf="!givenData.stockIsSelected">
+    <app-search-stock (stockChoosenEvent)="saveChoosenStock($event)" ></app-search-stock>
+  </div>
+  <div *ngIf="givenData.stockIsSelected" class="mb-4">
+    <span><b>Action : {{'('+choosenStock.symbol+') '+choosenStock.name}}</b></span>
+  </div>
+  <div *ngIf="!givenData.isAddMethod" class="mb-3">
+    <span><b>Quantité possédée : {{givenData.stock.quantity}}</b></span>
+  </div>
+  <div *ngIf="showStockDetails">
+    <span><b>Prix Unitaire :</b> {{stockPrice}} $</span>
+    <div class="mt-3">
+      <span class="mr-4">
+         <mat-form-field appearance="outline">
+        <mat-label>Montant</mat-label>
+        <input matInput type="number" placeholder="Montant à acheter" [(ngModel)]="amountToBuy" (ngModelChange)="amountToBuyChange($event)">
+        <span matSuffix>$</span>
+      </mat-form-field>
+      </span>
+      <span>
+        <mat-form-field appearance="outline">
+        <mat-label>Quantité</mat-label>
+        <input type="number" matInput placeholder="Quantité d'action" [(ngModel)]="quantityToBuy" (ngModelChange)="quantityChange($event)">
+      </mat-form-field>
+      </span>
+      <div *ngIf="givenData.isAddMethod && showErrorMessage">
+        <span style="color:red">Votre solde est insuffisant!</span>
+      </div>
+      <div *ngIf="!givenData.isAddMethod && showErrorMessage">
+        <span style="color:red">Vous ne disposez pas cette quantité d'action!</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div mat-dialog-actions class="justify-content: center">
+  <button mat-button [mat-dialog-close]=""  >Annuler</button>
+  <button mat-button [disabled]="!showStockDetails || showErrorMessage" (click)="givenData.isAddMethod?proceedToBuy():proceedToSell()" >Valider</button>
+</div>

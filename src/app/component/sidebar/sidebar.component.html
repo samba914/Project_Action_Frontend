@@ -1,0 +1,20 @@
+<div class="customNav">
+  <div class="d-flex flex-column align-items-center align-items-sm-start px-4 pr-5 pt-2 text-white" style="height: calc( 100vh - 50px );">
+    <a href="/home" class="nav-link" routerLink="home" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+      <span class="fs-5 d-none d-sm-inline">Menu</span>
+    </a>
+    <mat-divider></mat-divider>
+    <ul class="text-white-50 nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+      <li class="nav-item">
+        <a href="/home" class="nav-link" routerLink="home" class="nav-link align-middle px-1 text-white">
+          <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Accueil</span>
+        </a>
+      </li>
+      <li *ngIf="isLoggedIn">
+        <a href="/myactions" class="nav-link" routerLink="myactions" class="nav-link px-1 align-middle text-white">
+          <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">Mes actifs</span></a>
+      </li>
+
+    </ul>
+  </div>
+</div>
