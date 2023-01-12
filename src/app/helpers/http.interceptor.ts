@@ -9,7 +9,7 @@ import {
 } from '@angular/common/http';
 import {map, Observable} from 'rxjs';
 import {Router} from "@angular/router";
-import {StorageService} from "../../service/storage.service";
+import {StorageService} from "../service/storage.service";
 
 @Injectable()
 export class HttpRequestInterceptor implements HttpInterceptor {

@@ -8,7 +8,7 @@ import {
   HttpRequest
 } from "@angular/common/http";
 import {Router} from "@angular/router";
-import {StorageService} from "../../service/storage.service";
+import {StorageService} from "../service/storage.service";
 import {catchError, Observable, throwError} from "rxjs";
 
 @Injectable()

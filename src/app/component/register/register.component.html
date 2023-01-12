@@ -17,7 +17,6 @@
             [(ngModel)]="form.username"
             required
             minlength="3"
-            maxlength="20"
             #username="ngModel"
             [ngClass]="{ 'is-invalid': f.submitted && username.errors }"
           />
@@ -26,9 +25,36 @@
             <div *ngIf="username.errors['minlength']">
               Username must be at least 3 characters
             </div>
-            <div *ngIf="username.errors['maxlength']">
-              Username must be at most 20 characters
-            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="surname">Prénom</label>
+          <input
+            type="text"
+            class="form-control"
+            name="surname"
+            [(ngModel)]="form.surname"
+            required
+            #surname="ngModel"
+            [ngClass]="{ 'is-invalid': f.submitted && surname.errors }"
+          />
+          <div class="invalid-feedback" *ngIf="surname.errors && f.submitted">
+            <div *ngIf="surname.errors['required']">Surname is required</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="name">Nom</label>
+          <input
+            type="text"
+            class="form-control"
+            name="name"
+            [(ngModel)]="form.name"
+            required
+            #name="ngModel"
+            [ngClass]="{ 'is-invalid': f.submitted && name.errors }"
+          />
+          <div class="invalid-feedback" *ngIf="name.errors && f.submitted">
+            <div *ngIf="name.errors['required']">Name is required</div>
           </div>
         </div>
         <div class="form-group">

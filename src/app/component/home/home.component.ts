@@ -122,6 +122,7 @@ export class HomeComponent implements OnInit{
   }
   pricesMethod(data:any,isRangeSearch:boolean){
     this.stockValues = data;
+    console.log(data)
     let minStockPrice = data.reduce(function(prev:any, current:any) {
       return (prev["4. close"] < current["4. close"]) ? prev : current  });
 
